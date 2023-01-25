@@ -113,7 +113,17 @@ public class EnhetstestKundeController {
 
     @Test
     public void endre_IkkeLoggetInn(){
+        Kunde kunde = new Kunde("43164316431", "Petter", "Petterson",
+                "Petterveien 43", "9302", "Petterdalen",
+                "54316258", "petter");
 
+        when(sjekk.loggetInn()).thenReturn(null);
+
+        //act
+        String resultat = kundeController.endre(kunde);
+
+        //arrange
+        assertEquals("Ikke innlogget", resultat);
     }
 
     @Test
