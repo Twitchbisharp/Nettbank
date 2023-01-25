@@ -182,10 +182,10 @@ public class EnhetstestBankController {
         Transaksjon betaling1 = new Transaksjon(10, "1234567891", 1234,
                 "2020.02.02", "jippi", "1", "105010123456" );
 
-        Transaksjon betaling2 = new Transaksjon(10, "1234567892", 567,
+        Transaksjon betaling2 = new Transaksjon(11, "1234567892", 567,
                 "2021.12.12", "hurra", "1", "105010123456" );
 
-        Transaksjon betaling3 = new Transaksjon(10, "1234567893", 890,
+        Transaksjon betaling3 = new Transaksjon(12, "1234567893", 890,
                 "2022.02.02", "gratulerer", "0", "105010123456" );
 
         transaksjoner.add(betaling1);
