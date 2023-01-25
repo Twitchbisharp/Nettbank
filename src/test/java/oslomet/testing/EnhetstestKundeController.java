@@ -81,7 +81,16 @@ public class EnhetstestKundeController {
 
     @Test
     public void lagreKunde_IkkeLoggetInn(){
+        //arrange
+        Kunde kunde = new Kunde("43164316431", "Petter", "Petterson", "Petterveien 43", "9302", "Petterdalen", "54316258", "petter");
 
+        when(sjekk.loggetInn()).thenReturn(null);
+
+        //act
+        String resultat = kundeController.lagreKunde(kunde);
+
+        //assert
+        assertEquals("Ikke logget inn", resultat);
     }
 
     @Test
