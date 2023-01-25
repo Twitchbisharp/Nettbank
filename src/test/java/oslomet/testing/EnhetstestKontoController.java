@@ -101,6 +101,7 @@ public class EnhetstestKontoController {
         Konto konto1 = new Konto("12345678901", "4652132654", 12000, "Brukskonto", "NOK", null);
 
         when(sjekk.loggetInn()).thenReturn(null);
+
         //act
         String resultat = kontoController.endreKonto(konto1);
 

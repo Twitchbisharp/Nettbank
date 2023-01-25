@@ -89,8 +89,6 @@ public class EnhetstestKundeController {
 
         //assert
         assertEquals("Ikke logget inn", resultat);
-
-
     }
 
     @Test
