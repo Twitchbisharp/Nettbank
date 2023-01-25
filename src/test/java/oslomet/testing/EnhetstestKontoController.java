@@ -39,7 +39,24 @@ public class EnhetstestKontoController {
 
     @Test
     public void hentAlleKonti_LoggetInn(){
+        ArrayList<Konto>  konto = new ArrayList<>();
+        List<Transaksjon> transaksjoner = new ArrayList<>();
 
+        Konto enKonto = new Konto("01010110523", "12345678912",
+                20000, "brukerkonto", "NOK", transaksjoner);
+
+        konto.add(enKonto);
+
+        when(sjekk.loggetInn()).thenReturn("01010110523");
+
+        //arrange
+        when(repository.hentAlleKonti()).thenReturn(konto);
+
+        //act
+        List <Konto> resultat = kontoController.hentAlleKonti();
+
+        //assert
+        assertEquals(konto, resultat);
     }
 
     @Test
