@@ -37,6 +37,7 @@ public class EnhetstestKontoController {
 
     @Test
     public void hentAlleKonti_LoggetInn(){
+
         ArrayList<Konto>  konto = new ArrayList<>();
         List<Transaksjon> transaksjoner = new ArrayList<>();
 
@@ -46,8 +47,8 @@ public class EnhetstestKontoController {
         konto.add(enKonto);
 
         when(sjekk.loggetInn()).thenReturn("01010110523");
-
         //arrange
+
         when(repository.hentAlleKonti()).thenReturn(konto);
 
         //act
