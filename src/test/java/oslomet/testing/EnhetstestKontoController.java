@@ -45,11 +45,42 @@ public class EnhetstestKontoController {
 
     @Test
     public void registrer_LoggetInn(){
+        //arrange
+        Konto enKonto = new Konto(
+                "105010123456",
+                "01010110523",
+                720,
+                "Lønnskonto",
+                "NOK",
+                null);
 
+        when(sjekk.loggetInn()).thenReturn(enKonto.getKontonummer());
+        when(repository.registrerKonto(any(Konto.class))).thenReturn("Login Successful");
+
+        //act
+        String resultat = kontoController.registrerKonto(enKonto);
+
+        //assert
+        assertEquals("Login Successful", resultat);
     }
 
     @Test
     public void registrer_IkkeLoggetInn(){
+        //arrange
+        Konto enKonto = new Konto(
+                "105010123456",
+                "01010110523",
+                720, "Lønnskonto",
+                "NOK",
+                null);
+
+        when(sjekk.loggetInn()).thenReturn(null);
+
+        //act
+        String resultat = kontoController.registrerKonto(enKonto);
+
+        //assert
+        assertEquals(resultat, "Ikke innlogget");
 
     }
 
@@ -58,7 +89,7 @@ public class EnhetstestKontoController {
         //arrange
         Konto konto1 = new Konto("12345678901", "4652132654", 12000, "Brukskonto", "NOK", null);
 
-        when(sjekk.)
+
         //act
 
         //assert
