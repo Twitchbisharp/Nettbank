@@ -58,7 +58,13 @@ public class EnhetstestKontoController {
 
     @Test
     public void hentAlleKonti_IkkeLoggetInn(){
+        when(sjekk.loggetInn()).thenReturn(null);
 
+        //act
+        List <Konto> resultat = kontoController.hentAlleKonti();
+
+        //assert
+        assertNull(resultat);
     }
 
     @Test
