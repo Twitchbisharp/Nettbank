@@ -102,10 +102,10 @@ public class EnhetstestKontoController {
 
         when(sjekk.loggetInn()).thenReturn(null);
         //act
-        String resultat = repository.endreKonto(konto1);
+        String resultat = kontoController.endreKonto(konto1);
 
         //assert
-        assertNull(resultat);
+        assertEquals("Ikke innlogget", resultat);
 
     }
 
