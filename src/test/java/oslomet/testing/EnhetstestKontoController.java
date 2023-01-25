@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import oslomet.testing.API.AdminKontoController;
 import oslomet.testing.DataAaccessLayer.AdminRepository;
@@ -95,7 +96,16 @@ public class EnhetstestKontoController {
 
     @Test
     public void slett_LoggetInn(){
+        when(sjekk.loggetInn()).thenReturn("01010110523");
 
+        //arrange
+        Mockito.when(kontoController.slettKonto("01234567891")).thenReturn("OK");
+
+        //act
+        String resultat = kontoController.slettKonto("01234567891");
+
+        //assert
+        assertEquals("OK", resultat);
     }
 
     @Test
