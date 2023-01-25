@@ -41,7 +41,7 @@ public class EnhetstestKundeController {
     public void hentAlle_LoggetInn(){
         //arrange
         List<Kunde> kunder = new ArrayList<>();
-        Kunde kunde1 = new Kunde("15923647832", "Gunnar", "Gunnarson", "Gunnarveien", "1235", "Gunnardalen", "98563578", "passord");
+        Kunde kunde1 = new Kunde("15923647832", "Gunnar", "Gunnarson", "Gunnarveien 12", "1235", "Gunnardalen", "98563578", "passord");
 
         when(sjekk.loggetInn()).thenReturn("15923647832");
         when(repository.hentAlleKunder()).thenReturn(kunder);
@@ -64,7 +64,17 @@ public class EnhetstestKundeController {
 
     @Test
     public void lagreKunde_LoggetInn(){
+        //arrange
+        Kunde kunde = new Kunde("43164316431", "Petter", "Petterson", "Petterveien 43", "9302", "Petterdalen", "54316258", "petter");
 
+        when(sjekk.loggetInn()).thenReturn("43164316431");
+        when(repository.registrerKunde(kunde)).thenReturn("OK");
+
+        //act
+        String resultat = kundeController.lagreKunde(kunde);
+
+        //assert
+        assertEquals("OK", resultat);
     }
 
     @Test
