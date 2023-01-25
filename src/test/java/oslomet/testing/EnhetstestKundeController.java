@@ -123,7 +123,7 @@ public class EnhetstestKundeController {
         String resultat = kundeController.endre(kunde);
 
         //arrange
-        assertEquals("Ikke innlogget", resultat);
+        assertEquals("Ikke logget inn", resultat);
     }
 
     @Test
