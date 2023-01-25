@@ -83,14 +83,28 @@ public class EnhetstestKontoController {
         //arrange
         Konto konto1 = new Konto("12345678901", "4652132654", 12000, "Brukskonto", "NOK", null);
 
-        when(sjekk.)
+        when(sjekk.loggetInn()).thenReturn("12345678901");
+
+        when(repository.endreKonto(konto1)).thenReturn("OK");
+
         //act
+        String resultat = kontoController.endreKonto(konto1);
 
         //assert
+        assertEquals("OK", resultat);
     }
 
     @Test
     public void endreKonto_IkkeLoggetInn(){
+        //arrange
+        Konto konto1 = new Konto("12345678901", "4652132654", 12000, "Brukskonto", "NOK", null);
+
+        when(sjekk.loggetInn()).thenReturn(null);
+        //act
+        String resultat = repository.endreKonto(konto1);
+
+        //assert
+        assertNull(resultat);
 
     }
 
