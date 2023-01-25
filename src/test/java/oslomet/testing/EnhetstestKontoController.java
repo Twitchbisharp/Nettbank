@@ -6,12 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import oslomet.testing.API.AdminKontoController;
-import oslomet.testing.API.BankController;
 import oslomet.testing.DataAaccessLayer.AdminRepository;
-import oslomet.testing.DataAaccessLayer.BankRepository;
 import oslomet.testing.Models.Konto;
-import oslomet.testing.Models.Kunde;
-import oslomet.testing.Models.Transaksjon;
 import oslomet.testing.Sikkerhet.Sikkerhet;
 
 import java.util.ArrayList;
@@ -59,7 +55,13 @@ public class EnhetstestKontoController {
 
     @Test
     public void endreKonto_LoggetInn(){
+        //arrange
+        Konto konto1 = new Konto("12345678901", "4652132654", 12000, "Brukskonto", "NOK", null);
 
+        when(sjekk.)
+        //act
+
+        //assert
     }
 
     @Test
