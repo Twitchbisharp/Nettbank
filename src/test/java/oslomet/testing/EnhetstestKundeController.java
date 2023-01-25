@@ -140,7 +140,7 @@ public class EnhetstestKundeController {
                 "JaJaJa");
 
         when(sjekk.loggetInn()).thenReturn(enKunde.getPersonnummer());
-        when(repository.slettKonto(enKunde.getPersonnummer())).thenReturn("Logget inn");
+        when(repository.slettKunde(enKunde.getPersonnummer())).thenReturn("Logget inn"); //ss
 
         //act
         String resultat = kundeController.slett(enKunde.getPersonnummer());
