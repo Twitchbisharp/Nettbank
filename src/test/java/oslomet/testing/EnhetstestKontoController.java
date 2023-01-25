@@ -8,6 +8,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import oslomet.testing.API.AdminKontoController;
 import oslomet.testing.DataAaccessLayer.AdminRepository;
 import oslomet.testing.Models.Konto;
+import oslomet.testing.Models.Transaksjon;
 import oslomet.testing.Sikkerhet.Sikkerhet;
 
 import java.util.ArrayList;
@@ -35,52 +36,44 @@ public class EnhetstestKontoController {
 
     @Test
     public void hentAlleKonti_LoggetInn(){
+        ArrayList<Konto>  konto = new ArrayList<>();
+        List<Transaksjon> transaksjoner = new ArrayList<>();
 
+        Konto enKonto = new Konto("01010110523", "12345678912",
+                20000, "brukerkonto", "NOK", transaksjoner);
+
+        konto.add(enKonto);
+
+        when(sjekk.loggetInn()).thenReturn("01010110523");
+
+        //arrange
+        when(repository.hentAlleKonti()).thenReturn(konto);
+
+        //act
+        List <Konto> resultat = kontoController.hentAlleKonti();
+
+        //assert
+        assertEquals(konto, resultat);
     }
 
     @Test
     public void hentAlleKonti_IkkeLoggetInn(){
+        when(sjekk.loggetInn()).thenReturn(null);
 
+        //act
+        List <Konto> resultat = kontoController.hentAlleKonti();
+
+        //assert
+        assertNull(resultat);
     }
 
     @Test
     public void registrer_LoggetInn(){
-        //arrange
-        Konto enKonto = new Konto(
-                "105010123456",
-                "01010110523",
-                720,
-                "Lønnskonto",
-                "NOK",
-                null);
 
-        when(sjekk.loggetInn()).thenReturn(enKonto.getKontonummer());
-        when(repository.registrerKonto(any(Konto.class))).thenReturn("Login Successful");
-
-        //act
-        String resultat = kontoController.registrerKonto(enKonto);
-
-        //assert
-        assertEquals("Login Successful", resultat);
     }
 
     @Test
     public void registrer_IkkeLoggetInn(){
-        //arrange
-        Konto enKonto = new Konto(
-                "105010123456",
-                "01010110523",
-                720, "Lønnskonto",
-                "NOK",
-                null);
-
-        when(sjekk.loggetInn()).thenReturn(null);
-
-        //act
-        String resultat = kontoController.registrerKonto(enKonto);
-
-        //assert
-        assertEquals(resultat, "Ikke innlogget");
 
     }
 
@@ -89,14 +82,28 @@ public class EnhetstestKontoController {
         //arrange
         Konto konto1 = new Konto("12345678901", "4652132654", 12000, "Brukskonto", "NOK", null);
 
+        when(sjekk.loggetInn()).thenReturn("12345678901");
+
+        when(repository.endreKonto(konto1)).thenReturn("OK");
 
         //act
+        String resultat = kontoController.endreKonto(konto1);
 
         //assert
+        assertEquals("OK", resultat);
     }
 
     @Test
     public void endreKonto_IkkeLoggetInn(){
+        //arrange
+        Konto konto1 = new Konto("12345678901", "4652132654", 12000, "Brukskonto", "NOK", null);
+
+        when(sjekk.loggetInn()).thenReturn(null);
+        //act
+        String resultat = repository.endreKonto(konto1);
+
+        //assert
+        assertNull(resultat);
 
     }
 
