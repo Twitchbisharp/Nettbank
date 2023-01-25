@@ -131,6 +131,6 @@ public class EnhetstestKontoController {
         String result = kontoController.slettKonto("01230110523");
 
         //assert
-        assertEquals("Ikke logget inn", result);
+        assertEquals("Ikke innlogget", result);
     }
 }
