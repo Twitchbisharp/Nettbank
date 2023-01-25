@@ -105,11 +105,48 @@ public class EnhetstestKundeController {
 
     @Test
     public void slett_LoggetInn(){
+        //arrange
+        Kunde enKunde = new Kunde(
+                "09090098765",
+                "Geir",
+                "Sol",
+                "Spikkestadveien 22",
+                "3430",
+                "Spikkestad",
+                "66663333",
+                "JaJaJa");
+
+        when(sjekk.loggetInn()).thenReturn(enKunde.getPersonnummer());
+        when(repository.slettKonto(enKunde.getPersonnummer())).thenReturn("Logget inn");
+
+        //act
+        String resultat = kundeController.slett(enKunde.getPersonnummer());
+
+        //assert
+        assertEquals("Login Successful", resultat);
 
     }
 
     @Test
     public void slett_IkkeLoggetInn(){
+        //arrange
+        Kunde enKunde = new Kunde(
+                "09090098765",
+                "Geir",
+                "Sol",
+                "Spikkestadveien 22",
+                "3430",
+                "Spikkestad",
+                "66663333",
+                "JaJaJa");
+
+        when(sjekk.loggetInn()).thenReturn(null);
+
+        //act
+        String resultat = kundeController.slett(enKunde.getPersonnummer());
+
+        //assert
+        assertEquals("Ikke logget inn", resultat);
 
     }
 }
