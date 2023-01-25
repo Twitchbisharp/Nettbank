@@ -8,6 +8,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import oslomet.testing.API.AdminKontoController;
 import oslomet.testing.DataAaccessLayer.AdminRepository;
 import oslomet.testing.Models.Konto;
+import oslomet.testing.Models.Transaksjon;
 import oslomet.testing.Sikkerhet.Sikkerhet;
 
 import java.util.ArrayList;
@@ -35,12 +36,35 @@ public class EnhetstestKontoController {
 
     @Test
     public void hentAlleKonti_LoggetInn(){
+        ArrayList<Konto>  konto = new ArrayList<>();
+        List<Transaksjon> transaksjoner = new ArrayList<>();
 
+        Konto enKonto = new Konto("01010110523", "12345678912",
+                20000, "brukerkonto", "NOK", transaksjoner);
+
+        konto.add(enKonto);
+
+        when(sjekk.loggetInn()).thenReturn("01010110523");
+
+        //arrange
+        when(repository.hentAlleKonti()).thenReturn(konto);
+
+        //act
+        List <Konto> resultat = kontoController.hentAlleKonti();
+
+        //assert
+        assertEquals(konto, resultat);
     }
 
     @Test
     public void hentAlleKonti_IkkeLoggetInn(){
+        when(sjekk.loggetInn()).thenReturn(null);
 
+        //act
+        List <Konto> resultat = kontoController.hentAlleKonti();
+
+        //assert
+        assertNull(resultat);
     }
 
     @Test
