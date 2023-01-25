@@ -17,8 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -104,23 +103,24 @@ public class EnhetstestBankController {
     }
 
 
-    //De som kommer under her har jeg laget selv:
+    //De som kommer under her har vi laget selv:
     @Test
     public void hentTransaksjoner_LoggetInn(){
         //arrange
-        /* Trodde man måtte lage en fiktiv transaksjon også, men det måtte man ikke
-        List<Transaksjon> transaksjonList = new ArrayList<>();
-        Transaksjon betaling1 = new Transaksjon(1, "2514 23 1648", 200, "", "Melding heihei", "Mamma", "1548 54 5656");
-        transaksjonList.add(betaling1);
+        /*
+            List<Transaksjon> transaksjonList = new ArrayList<>();
+            Transaksjon betaling1 = new Transaksjon(1, "2514 23 1648", 200, "2020-02-23", "heihei", "Mamma", "1548 54 5656");
+            transaksjonList.add(betaling1);
         */
-        Konto konto1 = new Konto("12345678901", "1548 54 5656", 5000, "Privat kontro", "NOK", null);
+
+        Konto konto1 = new Konto("12345678901", "1548545656", 5000, "Privat konto", "NOK", null);
 
 
         when(sjekk.loggetInn()).thenReturn("12345678901");
         when(repository.hentTransaksjoner(anyString(), anyString(), anyString())).thenReturn(konto1);
 
         //act
-        Konto resultat = bankController.hentTransaksjoner("1548 54 5656", "", "");
+        Konto resultat = bankController.hentTransaksjoner("1548545656", "", "");
 
         //assert
         assertEquals(konto1, resultat);
@@ -207,6 +207,65 @@ public class EnhetstestBankController {
 
         //act
         List<Transaksjon> resultat = bankController.hentBetalinger();
+
+        //assert
+        assertNull(resultat);
+    }
+
+    @Test
+    public void registrerBetaling_LoggetInn(){
+        //arrange
+        Transaksjon betaling = new Transaksjon(10, "2345678901", 599, "2021-05-16", "Sko", "1", "01987654321");
+
+        when(sjekk.loggetInn()).thenReturn("25262315");
+        when(bankController.registrerBetaling(betaling)).thenReturn("OK");
+        //act
+        String resultat = bankController.registrerBetaling(betaling);
+
+        //assert
+        assertEquals("OK", resultat);
+    }
+
+    @Test
+    public void registrerBetaling_IkkeLoggetInn(){
+        //arrange
+        Transaksjon betaling = new Transaksjon(10, "2345678901", 599, "2021-05-16", "Sko", "1", "01987654321");
+
+        when(sjekk.loggetInn()).thenReturn(null);
+
+        //act
+        String resultat = bankController.registrerBetaling(betaling);
+
+        //assert
+        assertNull(resultat);
+    }
+
+    @Test
+    public void utforBetaling_LoggetInn(){
+        //arrange
+        List<Transaksjon> transaksjonList = new ArrayList<>();
+        Transaksjon betaling = new Transaksjon(10, "2345678901", 599, "2021-05-16", "Sko", "1","26252320");
+        transaksjonList.add(betaling);
+
+        when(sjekk.loggetInn()).thenReturn("25262315");
+        when(repository.utforBetaling(anyInt())).thenReturn("OK");
+        when(repository.hentBetalinger(anyString())).thenReturn(transaksjonList);
+
+
+        //act
+        List<Transaksjon> resultat = bankController.utforBetaling(10);
+
+        //assert
+        assertEquals(transaksjonList, resultat);
+    }
+
+    @Test
+    public void utforBetaling_IkkeLoggetInn(){
+        //arrange
+        when(sjekk.loggetInn()).thenReturn(null);
+
+        //act
+        List<Transaksjon> resultat = bankController.utforBetaling(10);
 
         //assert
         assertNull(resultat);
