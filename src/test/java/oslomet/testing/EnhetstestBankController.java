@@ -39,9 +39,7 @@ public class EnhetstestBankController {
     public void hentKundeInfo_loggetInn() {
 
         // arrange
-        Kunde enKunde = new Kunde("01010110523",
-                "Lene", "Jensen", "Askerveien 22", "3270",
-                "Asker", "22224444", "HeiHei");
+        Kunde enKunde = new Kunde("01010110523","Lene","Jensen","Askerveien 22","3270","Asker","22224444","HeiHei");
 
         when(sjekk.loggetInn()).thenReturn("01010110523");
 
@@ -141,7 +139,8 @@ public class EnhetstestBankController {
     public void hentSaldi_LoggetInn(){
         //arrange
         List<Konto> saldi = new ArrayList<>();
-        Konto konto1 = new Konto("01010110523",
+        Konto konto1 = new Konto(
+                "01010110523",
                 "105010123456",
                 720,
                 "Lønnskonto",
@@ -168,6 +167,56 @@ public class EnhetstestBankController {
 
         //act
         List<Konto> resultat = bankController.hentSaldi();
+
+        //assert
+        assertNull(resultat);
+    }
+
+    /*
+    Kommentar for "endreKundeInfo_LoggetInn" og "endreKundeInfo_IkkeLoggetInn" trengte en ekstra string value som var "Asker".
+    Antar at innleggingen av "Asker" er ok utifra DataSQL hvor 3270 er lenket med Asker.
+    */
+    @Test
+    public void endreKundeInfo_LoggetInn(){
+        //arrange
+        Kunde enKunde = new Kunde("01010110523",
+                "Lene",
+                "Jensen",
+                "Askerveien 22",
+                "3270",
+                "Asker",
+                "22224444",
+                "HeiHei");
+
+        when(sjekk.loggetInn()).thenReturn("01010110523");
+
+        when(repository.endreKundeInfo(any(Kunde.class))).thenReturn("Login Successful");
+
+        //act
+        String resultat = bankController.endre(enKunde);
+
+        //assert
+        assertEquals("Login Successful",resultat);
+
+    }
+
+    @Test
+    public void endreKundeInfo_IkkeLoggetInn(){
+        //arrange
+        Kunde enKunde = new Kunde(
+                "01010110523",
+                "Lene",
+                "Jensen",
+                "Askerveien 22",
+                "3270",
+                "Asker",
+                "22224444",
+                "HeiHei");
+
+        when(sjekk.loggetInn()).thenReturn(null);
+
+        //act
+        String resultat = bankController.endre(enKunde);
 
         //assert
         assertNull(resultat);
