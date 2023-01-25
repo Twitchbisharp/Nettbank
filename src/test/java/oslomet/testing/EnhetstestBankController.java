@@ -192,16 +192,24 @@ public class EnhetstestBankController {
         transaksjoner.add(betaling2);
         transaksjoner.add(betaling3);
 
-        String personnummer = "105010123456";
-
-        when(sjekk.loggetInn()).thenReturn(personnummer);
-        when(repository.hentBetalinger(personnummer)).thenReturn(transaksjoner);
+        when(sjekk.loggetInn()).thenReturn("105010123456");
+        when(repository.hentBetalinger("105010123456")).thenReturn(transaksjoner);
 
         //act
         List<Transaksjon> resultat = bankController.hentBetalinger();
 
         //assert
         assertEquals(transaksjoner, resultat);
+    }
+
+    @Test
+    public void hentBetalinger_Feil(){
+
+        //act
+        List<Transaksjon> resultat = bankController.hentBetalinger();
+
+        //assert
+        assertNull(resultat);
     }
 }
 
