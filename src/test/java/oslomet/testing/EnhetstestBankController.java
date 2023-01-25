@@ -268,7 +268,7 @@ public class EnhetstestBankController {
         Transaksjon betaling = new Transaksjon(10, "2345678901", 599, "2021-05-16", "Sko", "1", "01987654321");
 
         when(sjekk.loggetInn()).thenReturn("25262315");
-        when(bankController.registrerBetaling(betaling)).thenReturn("OK");
+        when(repository.registrerBetaling(betaling)).thenReturn("OK");
         //act
         String resultat = bankController.registrerBetaling(betaling);
 
