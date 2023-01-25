@@ -79,11 +79,14 @@ public class EnhetstestKontoController {
                 "NOK",
                 null);
 
+        when(sjekk.loggetInn()).thenReturn(enKonto.getPersonnummer());
+        when(repository.registrerKonto(any(Konto.class))).thenReturn("Logget inn");
+
         //act
         String resultat = kontoController.registrerKonto(enKonto);
 
         //assert
-        assertEquals("Ikke innlogget", resultat);
+        assertEquals("Logget inn", resultat);
     }
 
     @Test
