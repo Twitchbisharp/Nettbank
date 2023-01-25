@@ -124,6 +124,12 @@ public class EnhetstestKontoController {
 
     @Test
     public void slett_IkkeLoggetInn(){
+        when(sjekk.loggetInn()).thenReturn(null);
 
+        //act
+        String result = kontoController.slettKonto("01230110523");
+
+        //assert
+        assertEquals("Ikke logget inn", result);
     }
 }
