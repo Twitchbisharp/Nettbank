@@ -39,12 +39,27 @@ public class EnhetstestKundeController {
 
     @Test
     public void hentAlle_LoggetInn(){
+        //arrange
+        List<Kunde> kunder = new ArrayList<>();
+        Kunde kunde1 = new Kunde("15923647832", "Gunnar", "Gunnarson", "Gunnarveien", "1235", "Gunnardalen", "98563578", "passord");
 
+        when(sjekk.loggetInn()).thenReturn("15923647832");
+        when(repository.hentAlleKunder()).thenReturn(kunder);
+        //act
+        List<Kunde> resultat = kundeController.hentAlle();
+
+        //assert
+        assertEquals(kunder, resultat);
     }
 
     @Test
     public void hentAlle_IkkeLoggetInn(){
-
+        //arrange
+        when(sjekk.loggetInn()).thenReturn(null);
+        //act
+        List<Kunde> resultat = kundeController.hentAlle();
+        //assert
+        assertNull(resultat);
     }
 
     @Test
