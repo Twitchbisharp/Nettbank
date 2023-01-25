@@ -141,7 +141,75 @@ public class EnhetstestBankController {
     @Test
     public void hentSaldi_LoggetInn(){
         //arrange
+        List<Konto> saldi = new ArrayList<>();
+        Konto konto1 = new Konto("01010110523",
+                "105010123456",
+                720,
+                "Lønnskonto",
+                "NOK",
+                null);
 
+        saldi.add(konto1);
+
+        when(sjekk.loggetInn()).thenReturn("01010110523");
+
+        when(repository.hentSaldi(anyString())).thenReturn(saldi);
+
+        //act
+        List<Konto> resultat = bankController.hentSaldi();
+
+        //assert
+        assertEquals(saldi, resultat);
+    }
+
+    @Test
+    public void hentSaldi_IkkeLoggetInn(){
+        //arrange
+        when(sjekk.loggetInn()).thenReturn(null);
+
+        //act
+        List<Konto> resultat = bankController.hentSaldi();
+
+        //assert
+        assertNull(resultat);
+    }
+
+    @Test
+    public void hentBetalinger(){
+    //arrange
+        ArrayList<Transaksjon> transaksjoner = new ArrayList<>();
+
+        Transaksjon betaling1 = new Transaksjon(10, "1234567891", 1234,
+                "2020.02.02", "jippi", "1", "105010123456" );
+
+        Transaksjon betaling2 = new Transaksjon(10, "1234567892", 567,
+                "2021.12.12", "hurra", "1", "105010123456" );
+
+        Transaksjon betaling3 = new Transaksjon(10, "1234567893", 890,
+                "2022.02.02", "gratulerer", "0", "105010123456" );
+
+        transaksjoner.add(betaling1);
+        transaksjoner.add(betaling2);
+        transaksjoner.add(betaling3);
+
+        when(sjekk.loggetInn()).thenReturn("105010123456");
+        when(repository.hentBetalinger("105010123456")).thenReturn(transaksjoner);
+
+        //act
+        List<Transaksjon> resultat = bankController.hentBetalinger();
+
+        //assert
+        assertEquals(transaksjoner, resultat);
+    }
+
+    @Test
+    public void hentBetalinger_Feil(){
+
+        //act
+        List<Transaksjon> resultat = bankController.hentBetalinger();
+
+        //assert
+        assertNull(resultat);
     }
 
     @Test
@@ -203,4 +271,5 @@ public class EnhetstestBankController {
         assertNull(resultat);
     }
 }
+
 
