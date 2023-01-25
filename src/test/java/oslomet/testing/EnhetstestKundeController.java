@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import oslomet.testing.API.AdminKundeController;
 import oslomet.testing.API.BankController;
@@ -20,6 +21,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.mockitoSession;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -89,18 +91,39 @@ public class EnhetstestKundeController {
 
         //assert
         assertEquals("Ikke logget inn", resultat);
-
-
     }
 
     @Test
     public void endre_LoggetInn(){
+        Kunde kunde = new Kunde("43164316431", "Petter", "Petterson",
+                "Petterveien 43", "9302", "Petterdalen",
+                "54316258", "petter");
 
+        when(sjekk.loggetInn()).thenReturn("43164316431");
+
+        //arrange
+        Mockito.when(repository.endreKundeInfo(kunde)).thenReturn("OK");
+
+        //act
+        String resultat = kundeController.endre(kunde);
+
+        //arrange
+        assertEquals("OK", resultat);
     }
 
     @Test
     public void endre_IkkeLoggetInn(){
+        Kunde kunde = new Kunde("43164316431", "Petter", "Petterson",
+                "Petterveien 43", "9302", "Petterdalen",
+                "54316258", "petter");
 
+        when(sjekk.loggetInn()).thenReturn(null);
+
+        //act
+        String resultat = kundeController.endre(kunde);
+
+        //arrange
+        assertEquals("Ikke innlogget", resultat);
     }
 
     @Test
