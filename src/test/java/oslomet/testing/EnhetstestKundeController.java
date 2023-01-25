@@ -146,7 +146,7 @@ public class EnhetstestKundeController {
         String resultat = kundeController.slett(enKunde.getPersonnummer());
 
         //assert
-        assertEquals("Login Successful", resultat);
+        assertEquals("Logget inn", resultat);
 
     }
 
