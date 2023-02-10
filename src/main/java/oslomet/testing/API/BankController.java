@@ -101,7 +101,7 @@ public class BankController {
 
     @Autowired
     private DataSource dataSource;
-    @GetMapping("/initDBsimple")
+    @GetMapping("/initDB")
     public String initDB(){
         return repository.initDB(dataSource);
     }
